@@ -3,7 +3,7 @@ import LazyInput from '~c/inputs/lazy/lazy.js';
 import PropTypes from 'prop-types';
 import Styles from './minmax.module.css';
 
-export default class extends React.Component{
+export default class extends React.PureComponent{
     static defaultProps = {
         onChange: function(e){console.log(e)}
     }
@@ -43,6 +43,7 @@ export default class extends React.Component{
     }
 
     render(){
+        console.log('1');
         return(
             <div>
                 <button onClick={this.decrease}>Минус</button>

@@ -6,7 +6,8 @@ class Cart{
             products: observable,
             change: action,
             remove: action,
-            total: computed
+            total: computed,
+            onChange: computed
         });
     }
         
@@ -19,8 +20,15 @@ class Cart{
     change(cnt, i){
         this.products[i].cnt = cnt;
     }
+
     remove(i){
         this.products.splice(i, 1);
+    }
+
+    get onChange(){
+        return this.products.map((product, i) =>{
+            return (cnt) => this.change(cnt, i)
+        })
     }
 }
 

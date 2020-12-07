@@ -10,6 +10,10 @@ import {observer} from 'mobx-react';
 
 @observer class Cart extends React.Component{
 
+    prevMove = () => {
+        route.moveTo('order');
+    }
+
     render(){
         let productsRow  = cartModel.products.map((product, i) => {
             return(
@@ -20,7 +24,7 @@ import {observer} from 'mobx-react';
                         <MinMax min = {1} 
                                 max = {product.rest} 
                                 cnt = {product.cnt}
-                                onChange = {(cnt) => {cartModel.change(cnt, i)}} />
+                                onChange = {cartModel.onChange[i]} />
                     </td>
                     <td>{product.price * product.cnt}</td>
                     <td>
@@ -53,7 +57,7 @@ import {observer} from 'mobx-react';
             </div>
                 {/* <MinMax min={1} max={50} /> */}
                 <Button variant ="primary" 
-                        onClick = {() => route.moveTo('order')}>
+                        onClick = {this.prevMove}>
                         Заказать
                 </Button>
             </div>
