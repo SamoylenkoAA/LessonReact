@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import  {Form, Button, Modal} from 'react-bootstrap';
 
 import orderModel from '~s/order.js';
-import route from '~s/router.js';
+import {routesMap} from '~/routes/routes.js';
+import {Link} from 'react-router-dom';
 
 import {observer} from 'mobx-react';
 @observer class Order extends React.Component{
@@ -18,11 +19,12 @@ import {observer} from 'mobx-react';
 
     hide = () =>{
         this.setState({showModal: false});
+        this.props.history.push(routesMap.order);
     }
 
     confirm = () =>{
         this.hide();
-        route.moveTo('result');
+        this.props.history.push(routesMap.result);
     }
     render(){
         let formFields = [];
@@ -52,9 +54,9 @@ import {observer} from 'mobx-react';
                     {formFields}
                 </form>
                 <div>
-                    <Button variant ="link" onClick = {() => route.moveTo('cart')}>
+                    <Link to={routesMap.home} className = "btn btn-primary">
                         On Back
-                    </Button>
+                    </Link>
                     <Button variant="link" 
                             onClick = {this.show}
                             disabled = {!orderModel.formValid} >
@@ -72,7 +74,7 @@ import {observer} from 'mobx-react';
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" 
-                                onClick={() => this.setState({showModal: false})}>
+                                onClick={this.hide}>
                             Close
                         </Button>
                         <Button variant="primary"

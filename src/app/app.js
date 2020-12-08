@@ -1,16 +1,27 @@
 import React from 'React';
 
-import router from '~s/router.js';
 import {observer} from 'mobx-react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import routes from '~/routes/routes.js';
 
 @observer class App extends React.Component{
     render(){
+        let routesComponents = routes.map((route) => {
+            return <Route path={route.url} 
+                          component={route.component} 
+                          exact={route.exact}
+                          key={route.url}
+                    />
+        })
+
         return(
-            <div className='container'>
-                <button onClick = {() => this.forceUpdate()}>Update</button>
-                <hr/>
-                {router.component}
-            </div>
+            <Router>
+                <div className='container'>
+                    <Switch>
+                        {routesComponents}   
+                    </Switch>
+                </div>
+            </Router>
         )
     }
 }

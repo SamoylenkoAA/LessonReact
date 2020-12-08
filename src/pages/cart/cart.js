@@ -1,18 +1,19 @@
 import React from 'react';
-import MinMax from '~c/inputs/minmax/MinMax.js';
 import PropTypes from 'prop-types';
+import MinMax from '~c/inputs/minmax/MinMax.js';
 import { Button } from 'react-bootstrap';
 
 import cartModel from '~s/cart.js';
-import route from '~s/router.js';
+import {routesMap} from '~/routes/routes.js';
+import {Link} from 'react-router-dom';
 
 import {observer} from 'mobx-react';
 
 @observer class Cart extends React.Component{
 
-    prevMove = () => {
-        route.moveTo('order');
-    }
+    // prevMove = () => {
+    //     route.moveTo('order');
+    // }
 
     render(){
         let productsRow  = cartModel.products.map((product, i) => {
@@ -56,10 +57,9 @@ import {observer} from 'mobx-react';
                 Итоговая сумма: {cartModel.total}
             </div>
                 {/* <MinMax min={1} max={50} /> */}
-                <Button variant ="primary" 
-                        onClick = {this.prevMove}>
+                <Link to = {routesMap.order} className = "btn btn-primary">
                         Заказать
-                </Button>
+                </Link>
             </div>
         )
     }

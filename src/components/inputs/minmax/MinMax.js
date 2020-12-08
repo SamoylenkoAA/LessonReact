@@ -43,7 +43,6 @@ export default class extends React.PureComponent{
     }
 
     render(){
-        console.log('1');
         return(
             <div>
                 <button onClick={this.decrease}>Минус</button>
