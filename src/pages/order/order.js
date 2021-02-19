@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import  {Form, Button, Modal} from 'react-bootstrap';
-
-import orderModel from '~s/order.js';
+import rootStore from '~s/rootStore.js';
 import {routesMap} from '~/routes/routes.js';
 import {Link} from 'react-router-dom';
-
 import {observer} from 'mobx-react';
-@observer class Order extends React.Component{
+class Order extends React.Component{
 
     state = {
         showModal: false
@@ -27,6 +25,7 @@ import {observer} from 'mobx-react';
         this.props.history.push(routesMap.result);
     }
     render(){
+        let orderModel = rootStore.order;
         let formFields = [];
 
         for(let name in orderModel.formData){
@@ -54,7 +53,7 @@ import {observer} from 'mobx-react';
                     {formFields}
                 </form>
                 <div>
-                    <Link to={routesMap.home} className = "btn btn-primary">
+                    <Link to={routesMap.cart} className = "btn btn-primary">
                         On Back
                     </Link>
                     <Button variant="link" 
@@ -70,7 +69,7 @@ import {observer} from 'mobx-react';
                         <Modal.Title>Modal title</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Потвердить заказ {orderModel.formData['name'].value}    ?
+                        Потвердить заказ ?
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" 
@@ -88,4 +87,4 @@ import {observer} from 'mobx-react';
     }
 }
 
-export default Order;
+export default observer(Order);

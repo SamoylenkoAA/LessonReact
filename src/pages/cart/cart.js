@@ -2,35 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MinMax from '~c/inputs/minmax/MinMax.js';
 import { Button } from 'react-bootstrap';
-
-import cartModel from '~s/cart.js';
+import rootStore from '~s/rootStore.js';
 import {routesMap} from '~/routes/routes.js';
 import {Link} from 'react-router-dom';
-
 import {observer} from 'mobx-react';
+import LinkButton from '~c/links/button/button.js'
 
-@observer class Cart extends React.Component{
-
-    // prevMove = () => {
-    //     route.moveTo('order');
-    // }
-
+class Cart extends React.Component{
     render(){
-        let productsRow  = cartModel.products.map((product, i) => {
+        let cartModel = rootStore.cart;
+
+        let productsRow  = cartModel.productsInDetail.map((product) => {
             return(
-                <tr key = {product.id}>
+                <tr key={product.id}>
                     <td>{product.title}</td>
                     <td>{product.price}</td>
                     <td>
                         <MinMax min = {1} 
                                 max = {product.rest} 
                                 cnt = {product.cnt}
-                                onChange = {cartModel.onChange[i]} />
+                                onChange = {(cnt) => cartModel.change(cnt, product.id)} />
                     </td>
                     <td>{product.price * product.cnt}</td>
                     <td>
                         <Button variant ="primary" 
-                                onClick = {() => cartModel.remove(i)}>x
+                                onClick = {() => cartModel.remove(product.id)}>x
                         </Button>
                     </td>
                 </tr>
@@ -60,9 +56,10 @@ import {observer} from 'mobx-react';
                 <Link to = {routesMap.order} className = "btn btn-primary">
                         Заказать
                 </Link>
+                <LinkButton  to = {routesMap.order} className = {"btn btn-primary"} />
             </div>
         )
     }
 }
 
-export default Cart;
+export default observer(Cart);

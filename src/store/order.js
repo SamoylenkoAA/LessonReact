@@ -1,8 +1,9 @@
 import {makeObservable, observable, computed, action} from 'mobx';
 import { object } from 'prop-types';
 
-class Order {
-    constructor(){
+export default class {
+    constructor(rootStore){
+        this.rootStore = rootStore;
         makeObservable(this, {
             formData: observable,
             formValid: computed
@@ -44,4 +45,4 @@ class Order {
     }
 }
 
-export default new Order();
+// export default new Order();
